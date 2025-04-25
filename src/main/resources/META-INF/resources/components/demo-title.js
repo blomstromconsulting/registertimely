@@ -48,7 +48,7 @@ export class DemoTitle extends LitElement {
     render() {
         return html`
             <div class="title">
-                <h2>Report Timely</h2>
+                <h2>Report Timely!!</h2>
             </div>
             <div class="explanation">
                 <p>Welcome to Report Timely!</p>

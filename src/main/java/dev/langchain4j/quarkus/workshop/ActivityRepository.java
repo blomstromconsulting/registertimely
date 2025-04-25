@@ -14,13 +14,13 @@ public class ActivityRepository implements PanacheRepository<Activity> {
     @Inject
     ProjectRepository projectRepository;
 
-    @Tool("List all available activities")
+    @Tool("Retrieves a list of all available activities in the system. Returns a list of Activity objects containing id, name, description, and associated project.")
     @Transactional
     public List<Activity> listAllActivities() {
         return findAll().list();
     }
 
-    @Tool("Get activity by activity name and project name")
+    @Tool("Retrieves a specific activity by its name and the associated project name. Both parameters are case-insensitive. Returns the Activity object if found. Throws ActivityNotFoundException if no activity with the given name exists in the specified project.")
     @Transactional
     public Activity getActivityByName(String activityName, String projectName) {
         return find("lower(name)=?1 and lower(project.name)=?2",
@@ -28,7 +28,7 @@ public class ActivityRepository implements PanacheRepository<Activity> {
                 () -> new Exceptions.ActivityNotFoundException(activityName));
     }
 
-    @Tool("List all activities for a project name")
+    @Tool("Retrieves all activities associated with a specific project identified by its name. The project name is case-insensitive. Returns a list of Activity objects for the specified project. Throws ProjectNotFoundException if no project with the given name exists.")
     @Transactional
     public List<Activity> listAllActivitiesByProjectName(String projectName) {
         var project = projectRepository.findProjectByName(projectName);

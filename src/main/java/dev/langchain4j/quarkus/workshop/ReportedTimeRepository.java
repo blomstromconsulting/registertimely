@@ -28,7 +28,7 @@ public class ReportedTimeRepository implements PanacheRepository<ReportedTime> {
         return activityRepository.getActivityByName(activityName, project.name);
     }
 
-    @Tool("Register a new Reported Time entry for the given project name, activity name, person first name, person last name, date, and duration.")
+    @Tool("Creates and persists a new time entry in the system. Parameters: projectName (case-insensitive), activityName (case-insensitive, must exist in the project), firstName and lastName of the person (case-insensitive), date (in ISO format YYYY-MM-DD), and duration (decimal number of hours). Returns the created ReportedTime object. Throws ProjectNotFoundException if project doesn't exist, ActivityNotFoundException if activity doesn't exist, or PersonNotFoundException if person doesn't exist.")
     @Transactional
     public ReportedTime createReportedTime(String projectName, String activityName, String firstName, String lastName,
                                            LocalDate date, BigDecimal duration) {
@@ -44,7 +44,7 @@ public class ReportedTimeRepository implements PanacheRepository<ReportedTime> {
         return rt;
     }
 
-    @Tool("Deletes a Reported Time entry matching the given project name, activity name, persons first name and last name, date, and duration. Returns true if deleted.")
+    @Tool("Deletes a specific time entry from the system. Parameters: projectName (case-insensitive), activityName (case-insensitive), firstName and lastName of the person (case-insensitive), date (in ISO format YYYY-MM-DD), and duration (decimal number of hours). Returns true if an entry was found and deleted, false if no matching entry was found. Throws ProjectNotFoundException if project doesn't exist, ActivityNotFoundException if activity doesn't exist, or PersonNotFoundException if person doesn't exist.")
     @Transactional
     public boolean deleteReportedTime(String projectName, String activityName, String firstName, String lastName,
                                       LocalDate date, BigDecimal duration) {
@@ -62,7 +62,7 @@ public class ReportedTimeRepository implements PanacheRepository<ReportedTime> {
         return false;
     }
 
-    @Tool("Lists all Reported Time entries for a given Person within a specified timespan (from startDate to endDate).")
+    @Tool("Retrieves all time entries for a specific person within a date range. Parameters: firstName and lastName of the person (case-insensitive), startDate (inclusive, in ISO format YYYY-MM-DD), and endDate (inclusive, in ISO format YYYY-MM-DD). Returns a list of ReportedTime objects within the specified date range. The list will be empty if no entries are found. Throws PersonNotFoundException if the person doesn't exist.")
     @Transactional
     public List<ReportedTime> listReportedTimesForPersonAndTimespan(String firstName, String lastName,
                                                                     LocalDate startDate, LocalDate endDate) {
@@ -70,9 +70,7 @@ public class ReportedTimeRepository implements PanacheRepository<ReportedTime> {
         return list("person = ?1 and date >= ?2 and date <= ?3", person, startDate, endDate);
     }
 
-    @Tool("Lists all Reported Time entries for a given persons with first name and last name during a specified period. " +
-            "The period parameter can be one of the following formats: 'THIS_WEEK', 'LAST_WEEK', " +
-            "'WEEK_NUMBER:<number>', 'THIS_MONTH', 'LAST_MONTH', or 'MONTH:<number>'.")
+    @Tool("Retrieves all time entries for a specific person during a predefined period. Parameters: firstName and lastName of the person (case-insensitive), and period (a string specifying the time period). Valid period values are: 'THIS_WEEK' (current week from Monday to Sunday), 'LAST_WEEK' (previous week), 'WEEK_NUMBER:n' (specific week number in current year), 'THIS_MONTH' (current month), 'LAST_MONTH' (previous month), or 'MONTH:n' (specific month number 1-12 in current year). Returns a list of ReportedTime objects within the calculated date range. The list will be empty if no entries are found. Throws PersonNotFoundException if the person doesn't exist, or IllegalArgumentException if the period format is invalid.")
     @Transactional
     public List<ReportedTime> listReportedTimesForPersonAndPeriod(String firstName, String lastName, String period) {
         Person person = personRepository.findByName(firstName, lastName);
@@ -118,7 +116,7 @@ public class ReportedTimeRepository implements PanacheRepository<ReportedTime> {
         return list("person = ?1 and date >= ?2 and date <= ?3", person, startDate, endDate);
     }
 
-    @Tool("Lists all Reported Time entries for a given person with first name and last name associated with a specific project name.")
+    @Tool("Retrieves all time entries for a specific person on a specific project. Parameters: firstName and lastName of the person (case-insensitive), and projectName (case-insensitive). Returns a list of ReportedTime objects for the specified person and project. The list will be empty if no entries are found. Throws PersonNotFoundException if the person doesn't exist or ProjectNotFoundException if the project doesn't exist.")
     @Transactional
     public List<ReportedTime> listReportedTimesForPersonAndProject(String firstName, String lastName, String projectName) {
         Project project = projectRepository.findProjectByName(projectName);
@@ -126,11 +124,10 @@ public class ReportedTimeRepository implements PanacheRepository<ReportedTime> {
         return list("person = ?1 and activity.project = ?2", person, project);
     }
 
-    @Tool("Lists all Reported Time entries for a given project name within a specified timespan (from startDate to endDate).")
+    @Tool("Retrieves all time entries for a specific project within a date range. Parameters: projectName (case-insensitive), startDate (inclusive, in ISO format YYYY-MM-DD), and endDate (inclusive, in ISO format YYYY-MM-DD). Returns a list of ReportedTime objects for the specified project within the date range. The list will be empty if no entries are found. Throws ProjectNotFoundException if the project doesn't exist.")
     @Transactional
     public List<ReportedTime> listReportedTimesForProjectAndTimespan(String projectName, LocalDate startDate, LocalDate endDate) {
         Project project = projectRepository.findProjectByName(projectName);
         return list("activity.project = ?1 and date >= ?2 and date <= ?3", project, startDate, endDate);
     }
 }
-

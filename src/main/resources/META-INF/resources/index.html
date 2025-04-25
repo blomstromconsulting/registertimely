@@ -20,8 +20,8 @@
 
     <style>
         :root {
-            --main-bg-color: rgb(246, 242, 242);
-            --main-highlight-text-color: rgba(237, 98, 128);
+            --main-bg-color: rgb(240, 248, 255); /* Light blue background */
+            --main-highlight-text-color: rgba(100, 149, 237, 0.8); /* Cornflower blue */
         }
 
         body {
@@ -38,27 +38,83 @@
         }
 
         chat-bot {
-            --chatbot-avatar-bg-color: rgba(237, 98, 128);
+            --chatbot-avatar-bg-color: rgba(100, 149, 237, 0.8); /* Cornflower blue */
             --chatbot-avatar-margin: 10%;
-            --chatbot-header-bg-color: rgba(237, 98, 128);
+            --chatbot-header-bg-color: rgba(100, 149, 237, 0.8); /* Cornflower blue */
             --chatbot-header-title-color: #FFFFFF;
             --chatbot-body-bg-color: var(--main-bg-color);
-            --chatbot-send-button-color: rgba(237, 98, 128);
+            --chatbot-send-button-color: rgba(100, 149, 237, 0.8); /* Cornflower blue */
         }
 
         chat-bot::part(chat-bubble) {
-            --chat-bubble-avatar-color: rgba(237, 98, 128);
-            --chat-bubble-color: rgba(203, 232, 237, 0.71);
-            --chat-bubble-right-color: rgb(157, 238, 244);
+            --chat-bubble-avatar-color: rgba(100, 149, 237, 0.8); /* Cornflower blue */
+            --chat-bubble-color: rgba(176, 224, 230, 0.7); /* Powder blue */
+            --chat-bubble-right-color: rgba(135, 206, 250, 0.7); /* Light sky blue */
             --chat-bubble-font-color: #333;
             --chat-bubble-font-right-color: #333;
             --chat-bubble-delay: 0.2s;
         }
 
+        /* Markdown styles */
+        chat-bot::part(chat-bubble) h1,
+        chat-bot::part(chat-bubble) h2,
+        chat-bot::part(chat-bubble) h3,
+        chat-bot::part(chat-bubble) h4,
+        chat-bot::part(chat-bubble) h5,
+        chat-bot::part(chat-bubble) h6 {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        chat-bot::part(chat-bubble) p {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        chat-bot::part(chat-bubble) code {
+            background-color: rgba(0, 0, 0, 0.05);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        chat-bot::part(chat-bubble) pre {
+            background-color: rgba(0, 0, 0, 0.05);
+            padding: 8px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        chat-bot::part(chat-bubble) pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        chat-bot::part(chat-bubble) blockquote {
+            border-left: 3px solid rgba(100, 149, 237, 0.5); /* Cornflower blue */
+            padding-left: 10px;
+            margin-left: 0;
+            color: #555;
+        }
+
+        chat-bot::part(chat-bubble) ul, 
+        chat-bot::part(chat-bubble) ol {
+            padding-left: 20px;
+        }
+
+        chat-bot::part(chat-bubble) a {
+            color: rgba(100, 149, 237, 0.8); /* Cornflower blue */
+            text-decoration: none;
+        }
+
+        chat-bot::part(chat-bubble) a:hover {
+            text-decoration: underline;
+        }
+
         .middle {
             margin-top: 2em;
             overflow: hidden;
-            width: 50%;
+            width: 65%;
             margin-left: auto;
             margin-right: auto;
             display: flex;
