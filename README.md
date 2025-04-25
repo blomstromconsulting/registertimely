@@ -24,7 +24,7 @@ This application requires an OpenAI API key to function. You need to:
 
 To start the application in development mode:
 
-1. Ensure PostgreSQL is running and accessible
+1. Ensure Docker Desktop is running (required for the PostgreSQL test container that starts automatically)
 2. Make sure your OpenAI API key is set as an environment variable
 3. Run the application using Maven:
    ```
