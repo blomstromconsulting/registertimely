@@ -1,5 +1,7 @@
 # Report Timely
 
+For extensive AI generated documentation see: https://deepwiki.com/blomstromconsulting/registertimely/1-overview
+
 Report Timely is an AI-powered time registration assistant application built with Quarkus and LangChain4j. It helps users register their work hours by providing an intuitive chat interface that can process multiple activities per day, estimate time allocations, match activities to projects, and distribute hours across appropriate days.
 
 The application uses OpenAI's GPT model to understand user requests and applies Swedish work laws and regulations to ensure compliance with rest period requirements.
